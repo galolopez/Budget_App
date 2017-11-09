@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Budget_App.Models.Account_Details>
+
+<div class="col-sm-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <center><p style="font-weight: bold; font-size: x-large">DETAILS</p></center>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="panel-body">
+                <h4>Account:</h4>
+                <h5><b>@Html.DisplayFor(model => item.Name)</b></h5><hr />
+                <h4>Balance:</h4>
+                <h5><b>@Html.DisplayFor(model => item.Balance)</b></h5><hr />
+                <h4>Reconciled Amount:</h4>
+                <h5><b>@Html.DisplayFor(model => item.RecAmount)</b></h5><hr />
+                <h4>Archived:</h4>
+                <h5><b>@Html.DisplayFor(model => item.Archived)</b></h5><hr />
+            </div>
+        }
+    </div>
+</div>

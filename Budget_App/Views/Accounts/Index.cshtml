@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Budget_App.Models.Account>
+
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<section class="container" style="padding-top: 50px">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.ActionLink("New Account", "Create", null, new { @class = "btn btn-default" })
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-1">
+                            <center><p style="font-weight: bold; font-size: x-large"><b>ACCOUNTS</b></p></center>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        @{
+                            int ntab = 0;
+                            string stab = "";
+                            foreach (var item in Model)
+                            {
+                                stab = "#menu" + ntab++;
+                                <li><a href="@stab" data-toggle="tab">@Html.DisplayFor(modelItem => item.Name)</a></li>
+                            }
+}
+                    </ul>
+                    <div class="tab-content">
+                        @{
+                            ntab = 0;
+                            stab = "";
+                            foreach (var item in Model)
+                            {
+                                stab = "menu" + ntab++;
+                                <div class="tab-pane fade" id="@stab">
+                                    <div class="row" style="padding-top: 10px; padding-bottom: 10px">
+                                        <div class="col-sm-2">
+                                            <b>Balance:</b> @Html.DisplayFor(modelItem => item.Balance)
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <b>Reconciled Balance:</b> @Html.DisplayFor(modelItem => item.RecAmount)
+                                        </div>
+                                        <div class="col-sm-2 col-sm-offset-5">
+                                            <a type="button" class="btn btn-default" href="@Url.Action("Edit", "Accounts", new { id = item.Id })">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Edit Account"></span>
+                                            </a>
+                                            <a type="button" class="btn btn-default" href="@Url.Action("Delete", "Accounts", new { id = item.Id })">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Account"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @Html.Partial("_Transactions", item.Transactions)
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Budget_App.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="padding-top: 10px; padding-bottom: 10px">
+    @Html.ActionLink("New Item", "Create", "Items", null, new { @class = "btn btn-primary" })
+</div>
+<section class="panel panel-primary">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <a type="button" class="btn btn-default" href="@Url.Action("Edit", "Items", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Edit Item"></span>
+                    </a>
+                    <a type="button" class="btn btn-default" href="@Url.Action("Delete", "Items", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Item"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</section>

@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Budget_App.Models.Account>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<section class="container" style="padding-top: 20px">
+    <div class="row" style="padding-bottom: 20px">
+        <center><h1 style="font-weight: 900"><b>DASHBOARD</b></h1></center>
+    </div>
+    <div class="row" style="padding-bottom: 20px">
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><p style="font-weight: bold; font-size: x-large"><b>YOUR ACCOUNTS</b></p></center>
+                </div>
+                <div class="panel-body">
+                    @foreach (var item in Model)
+                    {
+                        <p><b>Account:    </b>@Html.DisplayFor(modeitem => item.Name)</p>
+                        <p><b>Balance:    </b>@Html.DisplayFor(modeitem => item.Balance)</p>
+                        <p><b>Reconciled: </b>@Html.DisplayFor(modeitem => item.RecAmount)</p><hr />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8" style="align-content: center">
+            <div id="chartdiv" style="width: 100%; height: 500px; font-size: 11px"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <center><p style="font-weight: bold; font-size: x-large"><b>RECENT TRANSACTIONS</b></p></center>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover" id="first">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Account
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Reconciled
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                @Html.Partial("_AllTransactions", item.Transactions)
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $('#first').DataTable();
+    @*var model = @Html.Raw(Json.Encode(Model));*@
+    var chart = AmCharts.makeChart("chartdiv", {
+        "theme": "light",
+        "type": "serial",
+        "dataProvider": [{
+            "country": "USA",
+            "year2004": 3.5,
+            "year2005": 4.2
+        }, {
+            "country": "UK",
+            "year2004": 1.7,
+            "year2005": 3.1
+        }, {
+            "country": "Canada",
+            "year2004": 2.8,
+            "year2005": 2.9
+        }, {
+            "country": "Japan",
+            "year2004": 2.6,
+            "year2005": 2.3
+        }, {
+            "country": "France",
+            "year2004": 1.4,
+            "year2005": 2.1
+        }, {
+            "country": "Brazil",
+            "year2004": 2.6,
+            "year2005": 4.9
+        }],
+        "valueAxes": [{
+            "unit": "$",
+            "position": "left",
+            "title": "Account Balances VS Reconciled Balances",
+        }],
+        "startDuration": 1,
+        "graphs": [{
+            "balloonText": "GDP grow in [[category]] (2004): <b>[[value]]</b>",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "2004",
+            "type": "column",
+            "valueField": "year2004"
+        }, {
+            "balloonText": "GDP grow in [[category]] (2005): <b>[[value]]</b>",
+            "fillAlphas": 0.9,
+            "lineAlpha": 0.2,
+            "title": "2005",
+            "type": "column",
+            "clustered": false,
+            "columnWidth": 0.5,
+            "valueField": "year2005"
+        }],
+        "plotAreaFillAlphas": 0.1,
+        "categoryField": "country",
+        "categoryAxis": {
+            "gridPosition": "start"
+        },
+        "export": {
+            "enabled": true
+        }
+
+    });
+</script>

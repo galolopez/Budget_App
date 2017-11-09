@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Budget_App.Models.Transaction>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="padding-top: 10px; padding-bottom: 10px">
+    @Html.ActionLink("New Transaction", "Create", "Transactions", null, new { @class = "btn btn-primary" })
+</div>
+<div class="panel panel-primary">
+    <table class="table table-hover" id="first">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    Reconciled
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-default" href="@Url.Action("Edit", "Transactions", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Edit Transaction"></span>
+                        </a>
+                        <a type="button" class="btn btn-default" href="@Url.Action("Delete", "Transactions", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Transaction"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // format ALL tables by <table> tag selector
+    $('#first').DataTable();
+    // or by id... $('#TicketsTable').DataTable();
+</script>

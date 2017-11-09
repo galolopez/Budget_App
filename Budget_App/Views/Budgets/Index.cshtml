@@ -1,0 +1,16 @@
+﻿@model Budget_App.Models.BudgetViewModel
+
+@{
+    ViewBag.Title = "Budgets";
+}
+
+<section style="padding-top: 50px">
+    <div class="row">
+        <div class="col-sm-5">
+            @Html.Partial("_Categories", Model.Categories)
+        </div>
+        <div class="col-sm-7">
+            @Html.Partial("_Budgets", Model.Budgets)
+        </div>
+    </div>
+</section>

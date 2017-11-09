@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Budget_App.Models.Budget>
+
+@{
+    ViewBag.Title = "Budgets";
+}
+
+<section style="padding-top: 50px">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.ActionLink("New Budget", "Create", null, new { @class = "btn btn-default" })
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-1">
+                            <center><p style="font-weight: bold; font-size: x-large"><b>BUDGETS</b></p></center>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        @{
+                            int ntab = 0;
+                            string stab = "";
+                            foreach (var item in Model)
+                            {
+                                stab = "#menu" + ntab++;
+                                <li><a href="@stab" data-toggle="tab">@Html.DisplayFor(modelItem => item.Name)</a></li>
+                            }
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        @{
+                            ntab = 0;
+                            stab = "";
+                            foreach (var item in Model)
+                            {
+                                stab = "menu" + ntab++;
+                                <div class="tab-pane fade" id="@stab">
+                                    <div class="row" style="padding-top: 10px">
+                                        <div class="col-sm-2 col-sm-offset-9">
+                                            <a type="button" class="btn btn-default" href="@Url.Action("Edit", "Budgets", new { id = item.Id })">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Edit Budget"></span>
+                                            </a>
+                                            <a type="button" class="btn btn-default" href="@Url.Action("Delete", "Budgets", new { id = item.Id })">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Budget"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @Html.Partial("_Items", item.Items)
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                @foreach(var item in Model)
+                {
+                    @*@Html.Partial("_Categories", )*@                    
+                }
+            </div>
+        </div>
+    </div>
+</section>
